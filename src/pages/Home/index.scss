@@ -1,0 +1,27 @@
+.home {
+  .tabBar {
+    position: fixed;
+    height: 50px;
+    width: 100%;
+    bottom: 0;
+    .iconfont {
+      font-size: 20px;
+    }
+    li {
+      float: left;
+      width: 25%;
+      text-align: center;
+      border-top: 1px solid #ccc;
+      padding-top: 5px;
+      a {
+        color: #888;
+        p {
+          font-size: 12px;
+        }
+        &.active {
+          color: #21b97a;
+        }
+      }
+    }
+  }
+}
