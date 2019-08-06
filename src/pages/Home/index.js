@@ -3,9 +3,45 @@ import House from './House'
 import Index from './Index/index.js'
 import News from './News'
 import My from './My'
-import { Route, Switch, NavLink } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import './index.scss'
+import { TabBar } from 'antd-mobile'
+const itemList = [
+  { title: '首页', icon: 'icon-ind', path: '/home' },
+  { title: '找房', icon: 'icon-findHouse', path: '/home/house' },
+  { title: '资讯', icon: 'icon-infom', path: '/home/news' },
+  { title: '我的', icon: 'icon-my', path: '/home/my' }
+]
 class Home extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      // 默认选中的tab
+      selectedTab: props.location.pathname
+    }
+  }
+  renderItem() {
+    return itemList.map(item => (
+      <TabBar.Item
+        // 标题文字
+        title={item.title}
+        key={item.title}
+        // 未选中图标
+        icon={<i className={`iconfont ${item.icon}`} />}
+        // 选中的图标
+        selectedIcon={<i className={`iconfont ${item.icon}`} />}
+        // 是否选中
+        selected={this.state.selectedTab === item.path}
+        // 点击事件
+        onPress={() => {
+          this.setState({
+            selectedTab: item.path
+          })
+          this.props.history.push(item.path)
+        }}
+      />
+    ))
+  }
   render() {
     return (
       <div className="home">
@@ -19,32 +55,7 @@ class Home extends React.Component {
 
         {/* 导航组件 */}
         <div className="tabBar">
-          <ul>
-            <li>
-              <NavLink exact to="/home">
-                <i className="iconfont icon-ind" />
-                <p>首页</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/home/house">
-                <i className="iconfont icon-findHouse" />
-                <p>找房</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/home/news">
-                <i className="iconfont icon-infom" />
-                <p>资讯</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/home/my">
-                <i className="iconfont icon-my" />
-                <p>我的</p>
-              </NavLink>
-            </li>
-          </ul>
+          <TabBar tintColor="#21b97a">{this.renderItem()}</TabBar>
         </div>
       </div>
     )
